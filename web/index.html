@@ -1,13 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video processing</title>
   </head>
+
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div id="content">
+        <div id="fileUploadContainer">
+          <input type="file" id="fileUploadInput" accept="video/mp4" />
+          <p>Choose video</p>
+        </div>
+
+        <div id="fileInfoContainer" class="hidden">
+          <div id="fileName"></div>
+          <div id="fileSize"></div>
+
+          <canvas id="preview"></canvas>
+
+          <p id="timeElapsed">Process started 0 secs ago</p>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="./main.js" defer></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import Clock from "./modules/clock.js";
+import { parseBytesIntoMBAndGB } from "./modules/utils.js";
 import "./style.css";
 
 //upload file
@@ -11,7 +12,7 @@ const fileSize = document.getElementById("fileSize");
 const txtfileName = document.getElementById("fileName");
 const timeElapsed = document.getElementById("timeElapsed");
 
-// trigger file input
+//trigger file input
 fileUploadContainer.addEventListener("click", () => {
   fileUploadInput.click();
 });
@@ -20,18 +21,14 @@ fileUploadContainer.addEventListener("click", () => {
 fileUploadInput.addEventListener("change", onChange);
 
 let took = "";
-
-function parseBytesIntoMBAndGB(bytes) {
-  const mb = bytes / (1024 * 1024);
-  // if mb is greater than 1024, then convert to GB
-  if (mb > 1024) {
-    // rount to 2 decimal places
-    return `${Math.round(mb / 1024)}GB`;
-  }
-  return `${Math.round(mb)}MB`;
-}
-
 const clock = new Clock();
+const worker = new Worker(new URL("./worker/worker.js", import.meta.url));
+
+worker.onmessage = (e) => {
+  console.log("Message from worker:", e.data);
+};
+
+worker.postMessage("Working...");
 
 function onChange(e) {
   const file = e.target.files[0];

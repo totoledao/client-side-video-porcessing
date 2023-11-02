@@ -88,11 +88,18 @@ To get a local copy up and running follow these simple steps.
    ```sh
    git clone https://github.com/totoledao/client-side-video-processing.git
    ```
-2. Install server dependencies
+2. Install the dependencies of each folder
    ```sh
-   cd server; npm ci
+   cd server; npm i
+   ```
+   ```sh
+   cd web; npm i
    ```
 3. Start the development server
+   ```sh
+   npm run dev
+   ```
+4. Start the client
    ```sh
    npm run dev
    ```

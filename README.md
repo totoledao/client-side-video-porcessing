@@ -15,7 +15,7 @@
   </a>
   
   <p align="center">
-    Cost-effective video processing with Node.js and WebAssembly
+    Cost-effective video processing in the web browser
     <br />
     <a href="https://github.com/totoledao/client-side-video-processing"><strong>Explore the docs »</strong></a>    
   </p>
@@ -50,13 +50,25 @@
 
 **A fast, cost-effective and user-friendly video processing tool that works directly in the web browser, making video processing a breeze.**
 
-The primary objective of this project is to deepen my understanding of core Node.js concepts while working with WebAssembly (Wasm) technologies. Additionally, it aims to provide a solution for reducing the expenses associated with file uploads by implementing client-side video processing. This approach not only alleviates server-side processing overhead but also improves storage optimization.
+The primary objective of this project is to deepen my understanding of Node.js while getting to know more about file processing concepts and technologies.<br>
+Additionally, it aims to provide a real world solution for reducing the expenses associated with file uploads by implementing client-side video processing. This approach not only alleviates server-side processing overhead but also improves storage optimization.<br>
+App created based on Semana JS Expert 8.0 by [Erick Wendel](https://cursos.erickwendel.com.br/)
+
+Workflow:
+
+- On demand download of mp4 file
+- Demultiplexing file with MP4Box.js
+- Encoding each fragment with video encoder
+- Multiplexing each fragment
+- Uploading fragments as WebM
+- Decoding each fragment with video decoder to show progress
 
 ### Built With
 
 - [Node.JS][nodejs-url]
 - [JavaScript][javascript-url]
-- [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm)
+- [MP4Box.js](https://github.com/gpac/mp4box.js/)
+- [WebCodecs](https://github.com/w3c/webcodecs/)
 
 <!-- GETTING STARTED -->
 
@@ -117,5 +129,3 @@ Guilherme Toledo - guilherme-toledo@live.com
 [javascript-url]: https://www.javascript.com/
 [nodejs-shield]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [nodejs-url]: https://nodejs.org/
-[wasm-shield]: https://img.shields.io/badge/WebAssembly-654FF0?style=for-the-badge&logo=WebAssembly&logoColor=white
-[wasm-url]: https://webassembly.org/

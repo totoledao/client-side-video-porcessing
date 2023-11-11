@@ -50,7 +50,7 @@
 
 **A fast, cost-effective and user-friendly video processing tool that works directly in the web browser, making video processing a breeze.**
 
-The primary objective of this project is to deepen my understanding of Node.js while getting to know more about file processing concepts and technologies.<br>
+The primary objective of this project is to learn about [Web Workers](https://developer.mozilla.org/docs/Web/API/Web_Workers_API), [JSDoc](https://jsdoc.app/), file processing concepts and technologies while deepening my understanding of Node.js.<br>
 Additionally, it aims to provide a real world solution for reducing the expenses associated with file uploads by implementing client-side video processing. This approach not only alleviates server-side processing overhead but also improves storage optimization.<br>
 App created based on Semana JS Expert 8.0 by [Erick Wendel](https://cursos.erickwendel.com.br/)
 

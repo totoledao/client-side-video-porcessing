@@ -22,17 +22,23 @@ fileUploadInput.addEventListener("change", onChange);
 
 let took = "";
 const clock = new Clock();
-const worker = new Worker(new URL("./worker/worker.js", import.meta.url));
+const worker = new Worker(new URL("./worker/worker.js", import.meta.url), {
+  type: "module",
+});
 
-worker.onmessage = (e) => {
-  console.log("Message from worker:", e.data);
+worker.onmessage = ({ data }) => {
+  if (data.status !== "done") return;
+
+  clock.stop();
+  timeElapsed.innerText = `Process took ${took.replace("ago", "")}`;
 };
-
-worker.postMessage("Working...");
 
 function onChange(e) {
   const file = e.target.files[0];
   const { name, size } = file;
+
+  worker.postMessage({ file });
+
   txtfileName.innerText = name;
   fileSize.innerText = parseBytesIntoMBAndGB(size);
 
@@ -43,9 +49,4 @@ function onChange(e) {
     took = time;
     timeElapsed.innerText = `Process started ${time}`;
   });
-
-  setTimeout(() => {
-    clock.stop();
-    timeElapsed.innerText = `Process took ${took.replace("ago", "")}`;
-  }, 5000);
 }

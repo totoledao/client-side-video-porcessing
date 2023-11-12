@@ -30,7 +30,7 @@ export class mp4Demuxer {
    * @param {ReadableStream} stream
    * @returns Promise<void>
    */
-  #init(stream) {
+  async #init(stream) {
     let _offset = 0;
     const consumeFile = new WritableStream({
       /**

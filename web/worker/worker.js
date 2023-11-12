@@ -1,3 +1,4 @@
+import { canvasRenderer } from "./canvasRenderer.js";
 import { mp4Demuxer } from "./mp4Demuxer.js";
 import { videoProcessor } from "./videoProcessor.js";
 
@@ -46,7 +47,7 @@ onmessage = async ({ data }) => {
   await VideoProcessor.start({
     file: data.file,
     encoderConfig,
-    sendMessage: self.postMessage,
+    renderFrame: canvasRenderer(data.canvas),
   });
 
   self.postMessage({

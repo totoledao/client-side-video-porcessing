@@ -12,6 +12,12 @@ const fileSize = document.getElementById("fileSize");
 const txtfileName = document.getElementById("fileName");
 const timeElapsed = document.getElementById("timeElapsed");
 
+//canvas for displaying frames
+/**
+ * @type {HTMLCanvasElement}
+ */
+const getCanvas = document.getElementById("preview");
+
 //trigger file input
 fileUploadContainer.addEventListener("click", () => {
   fileUploadInput.click();
@@ -36,8 +42,15 @@ worker.onmessage = ({ data }) => {
 function onChange(e) {
   const file = e.target.files[0];
   const { name, size } = file;
+  const canvas = getCanvas.transferControlToOffscreen();
 
-  worker.postMessage({ file });
+  worker.postMessage(
+    {
+      file,
+      canvas,
+    },
+    [canvas]
+  );
 
   txtfileName.innerText = name;
   fileSize.innerText = parseBytesIntoMBAndGB(size);

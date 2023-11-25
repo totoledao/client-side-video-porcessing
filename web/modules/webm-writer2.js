@@ -229,7 +229,7 @@
 
 class AutoCloseWritableStream {
   #timeoutId = null;
-  #idleTimeout = 2000
+  #idleTimeout = 5000
   #closeStream
   #completeFn
 

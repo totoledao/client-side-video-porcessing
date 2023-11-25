@@ -1,3 +1,4 @@
+import WebMWriter from "../modules/webm-writer2.js";
 import { canvasRenderer } from "./canvasRenderer.js";
 import { mp4Demuxer } from "./mp4Demuxer.js";
 import { videoProcessor } from "./videoProcessor.js";
@@ -40,18 +41,25 @@ const encoderConfig = {
   ...webm,
 };
 
+const webMWriterConfig = {
+  codec: "VP9",
+  width: encoderConfig.width,
+  height: encoderConfig.height,
+  bitrate: encoderConfig.bitrate,
+};
+
 const MP4Demuxer = new mp4Demuxer();
-const VideoProcessor = new videoProcessor(MP4Demuxer);
+const VideoProcessor = new videoProcessor({
+  MP4Demuxer,
+  WebMWriter: new WebMWriter(webMWriterConfig),
+});
 
 onmessage = async ({ data }) => {
   await VideoProcessor.start({
     file: data.file,
     encoderConfig,
     renderFrame: canvasRenderer(data.canvas),
-  });
-
-  self.postMessage({
-    status: "done",
+    sendMessage: self.postMessage,
   });
 };
 

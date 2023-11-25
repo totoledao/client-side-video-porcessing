@@ -37,6 +37,9 @@ worker.onmessage = ({ data }) => {
 
   clock.stop();
   timeElapsed.innerText = `Process took ${took.replace("ago", "")}`;
+
+  //download file to debug
+  downloadBlobAsFile(data.buffers, data.fileName);
 };
 
 function onChange(e) {
@@ -62,4 +65,18 @@ function onChange(e) {
     took = time;
     timeElapsed.innerText = `Process started ${time}`;
   });
+}
+
+//download file to debug
+function downloadBlobAsFile(buffers, fileName) {
+  const blob = new Blob(buffers, { type: "video/webm" });
+  const blobUrl = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = blobUrl;
+  a.download = fileName;
+  a.click();
+
+  URL.revokeObjectURL(blobUrl);
+  a.remove();
 }

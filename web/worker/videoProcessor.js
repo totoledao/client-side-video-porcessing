@@ -184,6 +184,46 @@ export class videoProcessor {
     });
   }
 
+  #uploadVideo(fileName, resolution, extension) {
+    const chunks = [];
+    let byteCount = 0;
+
+    const triggerUpload = async (chunks) => {
+      const blob = new Blob(chunks, { type: `video/${extension}` });
+
+      //upload file
+      //*** *** TODO *** ***
+
+      //clean chunks
+      chunks.length = 0;
+      byteCount = 0;
+    };
+
+    return new WritableStream({
+      /**
+       *
+       * @param {object} options
+       * @param {Uint8Array} options.data
+       */
+      async write({ data }) {
+        chunks.push(data);
+        byteCount += data.byteLength;
+
+        //If file size smaller than 10mb keep adding chunks
+        if (byteCount <= 10e6) return;
+        //If file size bigger than 10mb upload file
+        await triggerUpload(chunks);
+      },
+
+      async close() {
+        //Check if there are no chunks left before closing the stream
+        if (!chunks.length) return;
+        //If there are chunks left, upload file
+        await triggerUpload(chunks);
+      },
+    });
+  }
+
   /**
    *
    * @param {object} options
@@ -206,15 +246,12 @@ export class videoProcessor {
       .pipeThrough(this.#encoder(encoderConfig))
       .pipeThrough(this.#renderDecodedFrameAndGetEncodedChunk(renderFrame))
       .pipeThrough(this.#convertToWebM())
-      .pipeThrough(
-        this.#storeBuffer((args) =>
-          sendMessage({ ...args, fileName: `${fileName}-144p.webm` })
-        )
-      )
-      .pipeTo(
-        new WritableStream({
-          write(frame) {},
-        })
-      );
+      // Stores buffer and send message to download video
+      // .pipeThrough(
+      //   this.#storeBuffer((args) =>
+      //     sendMessage({ ...args, fileName: `${fileName}-144p.webm` })
+      //   )
+      // )
+      .pipeTo(this.#uploadVideo(fileName, "144p", "webm"));
   }
 }

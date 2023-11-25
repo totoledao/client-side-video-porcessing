@@ -39,7 +39,9 @@ worker.onmessage = ({ data }) => {
   timeElapsed.innerText = `Process took ${took.replace("ago", "")}`;
 
   //download file to debug
-  downloadBlobAsFile(data.buffers, data.fileName);
+  if (data.buffers) {
+    downloadBlobAsFile(data.buffers, data.fileName);
+  }
 };
 
 function onChange(e) {
